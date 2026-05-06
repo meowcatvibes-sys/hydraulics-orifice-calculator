@@ -1,5 +1,33 @@
 /* === APP === */
-.app { position:relative; min-height:100vh; padding:2rem 1.5rem 3rem; max-width:1200px; margin:0 auto; }
+.app { position:relative; min-height:100vh; padding:2rem 1.5rem 3rem; max-width:1200px; margin:0 auto; overflow:hidden; }
+
+/* === ANIME BACKGROUNDS === */
+.anime-bg { position:fixed; inset:0; z-index:-2; background-size:cover; background-position:center; opacity:0; transition:opacity 1.2s ease-in-out; animation:animeBgLive 25s ease-in-out infinite; }
+.anime-bg-active { opacity:1; }
+@keyframes animeBgLive { 0%{transform:scale(1) translate(0,0)} 25%{transform:scale(1.06) translate(-1%,-1%)} 50%{transform:scale(1.03) translate(1%,0.5%)} 75%{transform:scale(1.07) translate(-0.5%,1%)} 100%{transform:scale(1) translate(0,0)} }
+.anime-overlay { position:fixed; inset:0; z-index:-1; background:rgba(2,6,18,.72); pointer-events:none; }
+
+/* Anime badge */
+.anime-badge { display:flex; align-items:center; gap:.4rem; justify-content:center; margin-bottom:.8rem; position:relative; z-index:1; }
+.anime-badge-icon { font-size:1rem; }
+.anime-badge-text { font-family:'Orbitron',sans-serif; font-size:.7rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; animation:badgePulse 2s ease-in-out infinite; }
+.anime-naruto .anime-badge-text { color:#f97316; }
+.anime-dragonball .anime-badge-text { color:#facc15; }
+.anime-onepunchman .anime-badge-text { color:#ef4444; }
+@keyframes badgePulse { 0%,100%{opacity:.7} 50%{opacity:1} }
+
+/* Mode anime label */
+.mode-anime { font-size:.58rem; color:#5a7080; margin-top:.1rem; letter-spacing:.5px; }
+.mode-active .mode-anime { color:#00d4ff; }
+
+/* Theme-specific particle tints */
+.anime-naruto .p1 { background:radial-gradient(circle,#f97316,transparent); }
+.anime-naruto .p2 { background:radial-gradient(circle,#3b82f6,transparent); }
+.anime-dragonball .p1 { background:radial-gradient(circle,#facc15,transparent); }
+.anime-dragonball .p2 { background:radial-gradient(circle,#3b82f6,transparent); }
+.anime-onepunchman .p1 { background:radial-gradient(circle,#ef4444,transparent); }
+.anime-onepunchman .p2 { background:radial-gradient(circle,#fbbf24,transparent); }
+
 .bg-particles { position:fixed; inset:0; pointer-events:none; z-index:0; }
 .particle { position:absolute; border-radius:50%; opacity:.12; animation:floatP 22s infinite ease-in-out; }
 .p1 { width:300px; height:300px; background:radial-gradient(circle,#00d4ff,transparent); top:5%; left:-5%; }

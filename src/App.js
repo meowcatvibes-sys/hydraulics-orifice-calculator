@@ -69,14 +69,26 @@ function App() {
     }, 2500);
   };
 
+  const ANIME_THEMES = {1:'naruto',2:'dragonball',3:'onepunchman'};
+  const ANIME_LABELS = {1:'Naruto',2:'Dragon Ball',3:'One Punch Man'};
+
   return (
-    <div className="app" id="app">
+    <div className={`app anime-${ANIME_THEMES[mode]}`} id="app">
+      {/* Anime background layers */}
+      <div className={`anime-bg ${mode===1?'anime-bg-active':''}`} style={{backgroundImage:"url('/naruto-bg.png')"}}></div>
+      <div className={`anime-bg ${mode===2?'anime-bg-active':''}`} style={{backgroundImage:"url('/dragonball-bg.png')"}}></div>
+      <div className={`anime-bg ${mode===3?'anime-bg-active':''}`} style={{backgroundImage:"url('/onepunchman-bg.png')"}}></div>
+      <div className="anime-overlay"></div>
       <div className="bg-particles">
         <div className="particle p1"></div>
         <div className="particle p2"></div>
         <div className="particle p3"></div>
       </div>
       <Header />
+      <div className="anime-badge" id="anime-badge">
+        <span className="anime-badge-icon">🎬</span>
+        <span className="anime-badge-text">{ANIME_LABELS[mode]} Theme</span>
+      </div>
       <main className="main-content" id="main-content">
         <div className="mode-selector" id="mode-selector">
           {[1,2,3].map(m=>(
@@ -84,6 +96,7 @@ function App() {
               id={`mode-btn-${m}`} onClick={()=>handleModeChange(m)}>
               <span className="mode-count">{m}</span>
               <span className="mode-label">{m===1?'Liquid':'Liquids'}</span>
+              <span className="mode-anime">{ANIME_LABELS[m]}</span>
             </button>
           ))}
         </div>
