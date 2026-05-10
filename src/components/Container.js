@@ -177,8 +177,6 @@ function Container({ layers, mode, isDraining, drainDone }) {
           const pct = (h / max) * 100;
           // Bottom offset for this layer's bottom edge
           const bottomPct = layers.slice(0, i).reduce((s, l) => s + ((l.height || 0) / max) * 100, 0);
-          // Top of this layer
-          const topPct = bottomPct + pct;
           return (
             <React.Fragment key={i}>
               {/* Tick at bottom of layer (skip for first layer, already have bottom tick) */}
