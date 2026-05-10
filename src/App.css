@@ -326,17 +326,220 @@
 /* === FOOTER === */
 .footer { text-align:center; padding:2rem 1rem 1rem; margin-top:2rem; color:#1e2e3e; font-size:.75rem; position:relative; z-index:1; }
 
-/* === RESPONSIVE === */
-@media(max-width:768px) {
-  .app { padding:1rem; }
-  .header-title { font-size:1.1rem; }
-  .workspace { grid-template-columns:1fr; }
-  .mode-selector { gap:.5rem; }
-  .mode-btn { padding:.6rem 1.2rem; }
-  .box-front-face { width:180px; height:280px; }
-  .box-top-face { width:180px; }
-  .box-right-face { height:280px; }
-  .dimension-lines { height:280px; }
-  .q-number { font-size:1.8rem; }
-  .ai-panel { width:280px; right:1rem; }
+/* ===================================================================
+   RESPONSIVE — Full cellphone / tablet compatibility
+   =================================================================== */
+
+/* ---------- Tablets & small laptops (≤ 1024px) ---------- */
+@media (max-width: 1024px) {
+  .app { max-width: 100%; padding: 1.5rem 1rem 2rem; }
+  .workspace { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .container-visual { padding: 1rem 5rem 0 1rem; }
+}
+
+/* ---------- Large phones / small tablets (≤ 768px) ---------- */
+@media (max-width: 768px) {
+  .app { padding: 1rem .75rem 2rem; }
+
+  /* Header */
+  .header { padding: 1.5rem .5rem 1rem; }
+  .header-title { font-size: 1.15rem; }
+  .header-subtitle { font-size: .8rem; }
+  .header-glow { width: 280px; height: 60px; }
+  .header-specs { gap: .35rem; }
+  .spec-badge { font-size: .62rem; padding: .2rem .5rem; }
+
+  /* Mode selector */
+  .mode-selector { gap: .5rem; margin-bottom: 1.2rem; }
+  .mode-btn { padding: .6rem 1.2rem; border-radius: 12px; }
+  .mode-count { font-size: 1.3rem; }
+  .mode-label { font-size: .6rem; }
+
+  /* Workspace — stack to single column */
+  .workspace { grid-template-columns: 1fr; gap: 1.2rem; }
+
+  /* Container visual — center and scale down */
+  .container-visual {
+    padding: 1rem 4.5rem 0 1rem;
+    min-height: 400px;
+    order: -1; /* Show container visual above inputs on mobile */
+  }
+  .box-container { width: 200px; }
+  .box-front-face { width: 200px; height: 300px; }
+  .box-right-face { width: 24px; right: -24px; height: 300px; }
+  .dim-container { height: 300px; right: -30px; width: 80px; }
+  .dim-label-text { font-size: .65rem; }
+
+  /* Panels */
+  .input-panel, .orifice-panel { padding: 1.2rem; border-radius: 14px; }
+  .panel-title { font-size: .88rem; }
+  .panel-desc { font-size: .72rem; }
+
+  /* Inputs — larger touch targets */
+  .input-wrapper input { padding: .55rem .7rem; font-size: 16px; }
+  .input-group label { font-size: .72rem; }
+  .unit { font-size: .7rem; padding: 0 .6rem; }
+  .calculate-btn { padding: .75rem; font-size: .82rem; }
+
+  /* Results */
+  .q-number { font-size: 1.8rem; }
+  .q-unit { font-size: .8rem; }
+  .result-q-alt { font-size: .82rem; }
+  .result-box { padding: 1.4rem; border-radius: 14px; }
+  .time-breakdown { gap: .5rem; }
+  .time-chip { min-width: 100px; padding: .4rem .7rem; }
+  .time-chip-label { font-size: .5rem; }
+  .time-chip-value { font-size: .75rem; }
+  .step-card { padding: .7rem; gap: .6rem; }
+  .step-eq { font-size: .64rem; word-break: break-word; }
+  .step-desc { font-size: .72rem; }
+  .formula-eq { font-size: .7rem; word-break: break-word; }
+  .constants-row { gap: .35rem; }
+  .const-chip { font-size: .62rem; padding: .25rem .5rem; }
+
+  /* AI panel — wider on tablet */
+  .ai-panel { width: 300px; right: 1rem; bottom: 5rem; }
+  .ai-toggle { width: 48px; height: 48px; font-size: 1.2rem; bottom: 1.5rem; right: 1.5rem; }
+}
+
+/* ---------- Standard phones (≤ 480px) ---------- */
+@media (max-width: 480px) {
+  .app { padding: .75rem .5rem 1.5rem; }
+
+  /* Header */
+  .header { padding: 1rem .25rem .8rem; margin-bottom: .6rem; }
+  .header-title { font-size: 1rem; letter-spacing: -.3px; }
+  .header-subtitle { font-size: .72rem; margin-bottom: .5rem; }
+  .header-glow { width: 200px; height: 50px; }
+  .spec-badge { font-size: .58rem; padding: .15rem .4rem; }
+
+  /* Mode selector — ensure fit */
+  .mode-selector { gap: .3rem; margin-bottom: 1rem; }
+  .mode-btn { padding: .5rem .9rem; border-radius: 10px; }
+  .mode-count { font-size: 1.2rem; }
+  .mode-label { font-size: .55rem; letter-spacing: .5px; }
+
+  /* Container — scale to fit phone */
+  .container-visual {
+    padding: .8rem 3.5rem 0 .5rem;
+    min-height: 340px;
+    margin: 0 auto;
+    max-width: 320px;
+  }
+  .box-container { width: 170px; }
+  .box-front-face { width: 170px; height: 260px; }
+  .box-right-face { width: 20px; right: -20px; height: 260px; }
+  .dim-container { height: 260px; right: -25px; width: 70px; }
+  .dim-label-text { font-size: .6rem; }
+  .dim-tick-h { width: 16px; }
+  .pipe-vertical { height: 50px; }
+
+  /* Panels — compact */
+  .input-panel, .orifice-panel { padding: 1rem; border-radius: 12px; }
+  .panel-title { font-size: .82rem; }
+  .panel-desc { font-size: .68rem; }
+  .layer-group { padding: .55rem; margin-bottom: .6rem; }
+  .layer-title { font-size: .72rem; }
+  .layer-dot { width: 8px; height: 8px; }
+  .input-wrapper { border-radius: 8px; }
+  .input-wrapper input { padding: .5rem .6rem; font-size: 16px; }
+  .unit { padding: 0 .5rem; font-size: .65rem; }
+  .calculate-btn { padding: .7rem; font-size: .78rem; border-radius: 10px; letter-spacing: .5px; }
+  .sg-info { font-size: .6rem; }
+
+  /* Results — phone-friendly */
+  .result-section { margin-top: 1.2rem; }
+  .result-box { padding: 1.2rem; border-radius: 12px; }
+  .result-tag { font-size: .6rem; letter-spacing: 1.5px; }
+  .q-number { font-size: 1.5rem; }
+  .q-unit { font-size: .72rem; }
+  .result-q-alt { font-size: .75rem; }
+  .time-breakdown { flex-direction: column; gap: .4rem; align-items: stretch; }
+  .time-chip { min-width: unset; flex-direction: row; justify-content: space-between; align-items: center; padding: .5rem .8rem; }
+  .time-chip-label { font-size: .55rem; text-align: left; }
+  .time-chip-value { font-size: .75rem; margin-top: 0; }
+  .time-chip-sub { margin-top: 0; margin-left: .3rem; }
+  .solution-title { font-size: .75rem; }
+  .formula-row { padding: .5rem; }
+  .formula-eq { font-size: .65rem; }
+  .step-card { flex-direction: column; gap: .4rem; padding: .65rem; }
+  .step-num { width: 24px; height: 24px; font-size: .62rem; }
+  .step-eq { font-size: .6rem; word-break: break-word; overflow-wrap: break-word; }
+  .step-result { font-size: .72rem; }
+  .constants-row { gap: .25rem; }
+  .const-chip { font-size: .58rem; padding: .2rem .4rem; }
+
+  /* AI — full width panel on phone */
+  .ai-panel {
+    width: calc(100vw - 1.5rem);
+    right: .75rem;
+    left: .75rem;
+    bottom: 4.5rem;
+    max-height: 60vh;
+    border-radius: 14px;
+  }
+  .ai-toggle { width: 44px; height: 44px; font-size: 1.1rem; bottom: 1rem; right: 1rem; }
+  .ai-bubble p { font-size: .72rem; }
+  .ai-stat-label { font-size: .62rem; }
+  .ai-stat-val { font-size: .66rem; }
+  .ai-name { font-size: .82rem; }
+
+  /* Footer */
+  .footer { padding: 1.2rem .5rem .8rem; font-size: .68rem; }
+}
+
+/* ---------- Very small phones (≤ 360px) ---------- */
+@media (max-width: 360px) {
+  .app { padding: .5rem .35rem 1rem; }
+
+  .header-title { font-size: .88rem; }
+  .header-subtitle { font-size: .66rem; }
+  .spec-badge { font-size: .52rem; padding: .12rem .3rem; }
+
+  .mode-selector { gap: .2rem; }
+  .mode-btn { padding: .4rem .7rem; }
+  .mode-count { font-size: 1rem; }
+  .mode-label { font-size: .5rem; }
+
+  .container-visual {
+    padding: .5rem 2.5rem 0 .25rem;
+    min-height: 280px;
+    max-width: 280px;
+  }
+  .box-container { width: 140px; }
+  .box-front-face { width: 140px; height: 220px; }
+  .box-right-face { width: 16px; right: -16px; height: 220px; }
+  .dim-container { height: 220px; right: -20px; width: 60px; }
+  .dim-label-text { font-size: .52rem; }
+  .dim-tick-h { width: 12px; }
+  .pipe-vertical { height: 40px; }
+
+  .input-panel, .orifice-panel { padding: .8rem; }
+  .panel-title { font-size: .75rem; }
+  .layer-group { padding: .4rem; }
+  .input-wrapper input { padding: .4rem .5rem; }
+
+  .q-number { font-size: 1.3rem; }
+  .result-box { padding: 1rem; }
+  .step-eq { font-size: .55rem; }
+
+  .ai-panel { max-height: 55vh; }
+  .ai-body { padding: .7rem; }
+}
+
+/* ---------- Landscape phones ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app { padding: .5rem; }
+  .header { padding: .5rem .25rem; margin-bottom: .5rem; }
+  .header-title { font-size: .95rem; }
+  .header-subtitle { display: none; }
+  .header-specs { display: none; }
+  .workspace { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .container-visual { min-height: 260px; padding: .5rem 3rem 0 .5rem; }
+  .box-container { width: 150px; }
+  .box-front-face { width: 150px; height: 230px; }
+  .box-right-face { width: 18px; right: -18px; height: 230px; }
+  .dim-container { height: 230px; }
+  .mode-selector { margin-bottom: .6rem; }
+  .ai-panel { max-height: 50vh; }
 }
