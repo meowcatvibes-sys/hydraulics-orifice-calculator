@@ -8,34 +8,36 @@ import AiAssistant from './components/AiAssistant';
 import { calculateTime } from './utils/calculate';
 import './App.css';
 
+// Layers: index 0 = bottom (densest), last = top (lightest)
 const PRESETS = {
   1: {
-    layers: [{ name:'Water', sg:1.0, h1:3.0, h2:1.0, height:3.0, color:'water' }],
-    containerDiameter:1.5, orificeDiameter:0.035, C:0.959,
+    layers: [{ name:'Water', sg:1.0, height:9.0, color:'water' }],
+    length:4, width:4, orificeDiameter:0.035, C:0.976,
   },
   2: {
     layers: [
-      { name:'Liquid 1', sg:0.8, height:4.0, color:'liquid1' },
-      { name:'Liquid 2', sg:1.0, height:6.0, color:'liquid2' },
+      { name:'Liquid 1', sg:1.0, height:8.0, color:'liquid1' },
+      { name:'Liquid 2', sg:0.85, height:9.0, color:'liquid2' },
     ],
-    containerDiameter:1.5, orificeDiameter:0.035, C:0.959,
+    length:4, width:4, orificeDiameter:0.019, C:0.982,
   },
   3: {
     layers: [
-      { name:'Liquid 1', sg:0.85, height:0.5, color:'liquid1' },
-      { name:'Liquid 2', sg:1.0, height:0.8, color:'liquid2' },
-      { name:'Liquid 3', sg:1.75, height:1.0, color:'liquid3' },
+      { name:'Liquid 1', sg:1.73, height:2.0, color:'liquid1' },
+      { name:'Liquid 2', sg:1.0, height:8.0, color:'liquid2' },
+      { name:'Liquid 3', sg:0.85, height:9.0, color:'liquid3' },
     ],
-    containerDiameter:2.0, orificeDiameter:0.019, C:0.983,
+    length:4, width:4, orificeDiameter:0.022, C:0.971,
   },
 };
 
 function App() {
   const [mode, setMode] = useState(1);
   const [layers, setLayers] = useState(PRESETS[1].layers);
-  const [containerDiameter, setContainerDiameter] = useState(1.5);
+  const [length, setLength] = useState(4);
+  const [width, setWidth] = useState(4);
   const [orificeDiameter, setOrificeDiameter] = useState(0.035);
-  const [coeff, setCoeff] = useState(0.959);
+  const [coeff, setCoeff] = useState(0.976);
   const [result, setResult] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [isDraining, setIsDraining] = useState(false);
@@ -45,7 +47,8 @@ function App() {
     setMode(m);
     const p = PRESETS[m];
     setLayers(p.layers.map(l=>({...l})));
-    setContainerDiameter(p.containerDiameter);
+    setLength(p.length);
+    setWidth(p.width);
     setOrificeDiameter(p.orificeDiameter);
     setCoeff(p.C);
     setResult(null); setShowResult(false); setDrainDone(false);
@@ -57,7 +60,7 @@ function App() {
 
   const handleCalculate = () => {
     if (isDraining) return;
-    const res = calculateTime(layers, containerDiameter, orificeDiameter, coeff);
+    const res = calculateTime(layers, length, width, orificeDiameter, coeff);
     setResult(res);
     setShowResult(false); setDrainDone(false); setIsDraining(true);
     setTimeout(() => {
@@ -66,29 +69,19 @@ function App() {
         const el = document.getElementById('result-box');
         if (el) el.scrollIntoView({ behavior:'smooth', block:'center' });
       }, 200);
-    }, 2500);
+    }, 3000);
   };
 
-  const ANIME_THEMES = {1:'naruto',2:'dragonball',3:'onepunchman'};
-  const ANIME_LABELS = {1:'Naruto',2:'Dragon Ball',3:'One Punch Man'};
-
   return (
-    <div className={`app anime-${ANIME_THEMES[mode]}`} id="app">
-      {/* Anime background layers */}
-      <div className={`anime-bg ${mode===1?'anime-bg-active':''}`} style={{backgroundImage:"url('/naruto-bg.png')"}}></div>
-      <div className={`anime-bg ${mode===2?'anime-bg-active':''}`} style={{backgroundImage:"url('/dragonball-bg.png')"}}></div>
-      <div className={`anime-bg ${mode===3?'anime-bg-active':''}`} style={{backgroundImage:"url('/onepunchman-bg.png')"}}></div>
-      <div className="anime-overlay"></div>
+    <div className="app" id="app">
+      <div className="pro-bg"></div>
+      <div className="pro-grid-overlay"></div>
       <div className="bg-particles">
         <div className="particle p1"></div>
         <div className="particle p2"></div>
         <div className="particle p3"></div>
       </div>
       <Header />
-      <div className="anime-badge" id="anime-badge">
-        <span className="anime-badge-icon">🎬</span>
-        <span className="anime-badge-text">{ANIME_LABELS[mode]} Theme</span>
-      </div>
       <main className="main-content" id="main-content">
         <div className="mode-selector" id="mode-selector">
           {[1,2,3].map(m=>(
@@ -96,14 +89,14 @@ function App() {
               id={`mode-btn-${m}`} onClick={()=>handleModeChange(m)}>
               <span className="mode-count">{m}</span>
               <span className="mode-label">{m===1?'Liquid':'Liquids'}</span>
-              <span className="mode-anime">{ANIME_LABELS[m]}</span>
             </button>
           ))}
         </div>
         <div className="workspace">
           <div className="panels-col">
             <InputPanel mode={mode} layers={layers}
-              containerDiameter={containerDiameter} setContainerDiameter={setContainerDiameter}
+              length={length} setLength={setLength}
+              width={width} setWidth={setWidth}
               updateLayer={updateLayer} />
             <OrificePanel orificeDia={orificeDiameter} coeff={coeff}
               setOrificeDia={setOrificeDiameter} setCoeff={setCoeff}

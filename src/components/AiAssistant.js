@@ -6,12 +6,15 @@ function AiAssistant({ result, mode }) {
   const getInsight = () => {
     if (!result) return "Hello! I'm Sir CJ, your hydraulics assistant. Set up your parameters and hit Calculate — I'll walk you through the results! 💧";
     if (result.mode === 1) {
-      return `Great calculation! With a ${result.containerDiameter}m diameter cylinder and a ${(result.orificeDiameter*1000).toFixed(0)}mm orifice (C=${result.C}), it takes ${result.time.toFixed(3)} seconds to drain from h₁=${result.h1}m to h₂=${result.h2}m. The key factor K = ${result.K.toFixed(2)} determines how quickly the tank empties. A larger orifice or higher C would reduce drain time significantly.`;
+      return `With a ${result.length}m × ${result.width}m box (As=${result.As.toFixed(3)} m²) and a ${(result.orificeDiameter*1000).toFixed(0)}mm orifice (C=${result.C}), it takes ${result.time.toFixed(3)}s (${(result.time/60).toFixed(3)} min) to drain. K = ${result.K.toFixed(2)}.`;
     }
-    if (result.mode === 2) {
-      return `Two-liquid analysis complete! The bottom liquid (SG=${result.layers[1].sg}) drains first in ${result.cumulativeTimes[0].toFixed(3)}s. The equivalent head converts from ${result.hNew1.toFixed(1)}m down to ${result.hNew2.toFixed(1)}m. Total cumulative drain time is ${result.cumulativeTimes[1].toFixed(3)}s. Notice how the top liquid (SG=${result.layers[0].sg}) takes longer per meter because the driving pressure head is lower!`;
-    }
-    return `Three-liquid system analyzed! Bottom liquid (SG=${result.layers[2].sg}) drains first: cumulative Time₁ = ${result.cumulativeTimes[0].toFixed(3)}s. Middle liquid (SG=${result.layers[1].sg}): cumulative Time₂ = ${result.cumulativeTimes[1].toFixed(3)}s. Top liquid (SG=${result.layers[0].sg}): cumulative Time₃ = ${result.cumulativeTimes[2].toFixed(3)}s. Each segment uses equivalent head conversion to the draining liquid's SG.`;
+    const n = result.mode;
+    let msg = `${n}-liquid analysis complete! `;
+    result.cumulativeTimes.forEach((t, i) => {
+      const label = i === 0 ? 'Drain Liquid 1' : i === n-1 ? 'Total drain' : `Drain Liquids 1-${i+1}`;
+      msg += `${label}: ${t.toFixed(3)}s. `;
+    });
+    return msg;
   };
 
   return (
@@ -36,6 +39,10 @@ function AiAssistant({ result, mode }) {
               <div className="ai-stat">
                 <span className="ai-stat-label">Mode</span>
                 <span className="ai-stat-val">{result.mode} Liquid{result.mode>1?'s':''}</span>
+              </div>
+              <div className="ai-stat">
+                <span className="ai-stat-label">Container</span>
+                <span className="ai-stat-val">{result.length}m × {result.width}m Box</span>
               </div>
               <div className="ai-stat">
                 <span className="ai-stat-label">K Factor</span>

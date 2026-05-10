@@ -10,7 +10,7 @@ function Header() {
       </h1>
       <p className="header-subtitle">Hydraulics Engineering Project — Multi-Layered Fluid Analysis</p>
       <div className="header-specs">
-        <span className="spec-badge">Cylindrical Container</span>
+        <span className="spec-badge">Rectangular Box Container</span>
         <span className="spec-badge">1 / 2 / 3 Liquids</span>
         <span className="spec-badge">Bottom Orifice</span>
       </div>
